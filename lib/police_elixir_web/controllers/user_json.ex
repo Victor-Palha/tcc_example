@@ -20,4 +20,17 @@ defmodule PoliceElixirWeb.UserJSON do
       error: error
     }
   end
+
+  def user_deleted(%{ok: %User{registration: registration}}) do
+    %{
+      message: "Usuário deletado com sucesso",
+      user: registration
+    }
+  end
+
+  def user_deleted(%{error: :not_found}) do
+    %{
+      message: "Usuário não encontrado"
+    }
+  end
 end

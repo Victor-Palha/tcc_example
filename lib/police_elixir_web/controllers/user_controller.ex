@@ -5,6 +5,8 @@ defmodule PoliceElixirWeb.UserController do
   alias Users.CreateUser
   alias Users.FetchRegistration
   alias Users.Auth
+  alias Users.DeleteUser
+  alias Users.GetById
 
   def create(conn, params_req) do
     with {:ok, user} <- CreateUser.execute(params_req) do
@@ -19,11 +21,23 @@ defmodule PoliceElixirWeb.UserController do
 
     case Auth.execute(registration, password) do
       true -> conn |> put_status(:ok) |> render(:auth, ok: generate_token(registration))
-      false -> conn |> put_status(:unauthorized) |> render(:auth, error: "Invalid password or Registration")
-      {:error, :not_found} -> conn |> put_status(:unauthorized) |> render(:auth, error: "Invalid password or Registration")
+      false -> conn |> put_status(:unauthorized) |> render(:auth, error: "Matricula ou senha inválida")
+      {:error, :not_found} -> conn |> put_status(:unauthorized) |> render(:auth, error: "Matricula ou senha inválida")
       {:error, _} -> conn |> put_status(:internal_server_error) |> render(:auth, error: "Internal Server Error")
     end
 
+  end
+
+  def delete(conn, params_req) do
+    %{"id" => id} = params_req
+    id_parsed = String.to_integer(id)
+
+    case GetById.execute(id_parsed) do
+      {:ok, user} ->
+        DeleteUser.execute(user)
+        conn |> put_status(:ok) |> render(:user_deleted, ok: user)
+      {:error, _} -> conn |> put_status(:not_found) |> render(:user_deleted, error: :not_found)
+    end
   end
 
   defp generate_token(registration) do

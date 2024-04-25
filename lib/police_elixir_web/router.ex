@@ -10,7 +10,7 @@ defmodule PoliceElixirWeb.Router do
 
     post "/users", UserController, :create
     post "/users/auth", UserController, :auth
-
+    delete "/users/:id", UserController, :delete
   end
 
   # Enable LiveDashboard in development

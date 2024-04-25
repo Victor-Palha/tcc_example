@@ -6,4 +6,18 @@ defmodule PoliceElixirWeb.UserJSON do
       registration: registration
     }
   end
+
+  def auth(%{ok: token}) do
+    %{
+      message: "Usuário autenticado com sucesso",
+      token: token
+    }
+  end
+
+  def auth(%{error: error}) do
+    %{
+      message: "Falha na autenticação",
+      error: error
+    }
+  end
 end

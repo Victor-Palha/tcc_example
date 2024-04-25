@@ -9,7 +9,7 @@ defmodule PoliceElixirWeb.Router do
     pipe_through :api
 
     post "/users", UserController, :create
-    # post "/users/auth", UserController, :auth
+    post "/users/auth", UserController, :auth
 
   end
 

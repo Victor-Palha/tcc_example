@@ -33,4 +33,17 @@ defmodule PoliceElixirWeb.UserJSON do
       message: "Usuário não encontrado"
     }
   end
+
+  def user_updated(%{ok: %User{registration: registration}}) do
+    %{
+      message: "Usuário atualizado com sucesso",
+      user: registration
+    }
+  end
+
+  def user_updated(%{error: :not_found}) do
+    %{
+      message: "Usuário não encontrado"
+    }
+  end
 end

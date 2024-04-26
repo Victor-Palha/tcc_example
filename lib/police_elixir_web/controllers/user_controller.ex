@@ -7,6 +7,7 @@ defmodule PoliceElixirWeb.UserController do
   alias Users.Auth
   alias Users.DeleteUser
   alias Users.GetById
+  alias Users.ChangeUserRole
 
   def create(conn, params_req) do
     with {:ok, user} <- CreateUser.execute(params_req) do
@@ -37,6 +38,17 @@ defmodule PoliceElixirWeb.UserController do
         DeleteUser.execute(user)
         conn |> put_status(:ok) |> render(:user_deleted, ok: user)
       {:error, _} -> conn |> put_status(:not_found) |> render(:user_deleted, error: :not_found)
+    end
+  end
+
+  def change_role(conn, params_req) do
+    %{"registration" => registration, "new_role" => new_role} = params_req
+
+    case FetchRegistration.execute(registration) do
+      {:ok, user} ->
+        ChangeUserRole.execute(user, new_role)
+        conn |> put_status(:ok) |> render(:user_updated, ok: user)
+      {:error, _} -> conn |> put_status(:not_found) |> render(:user_updated, error: :not_found)
     end
   end
 

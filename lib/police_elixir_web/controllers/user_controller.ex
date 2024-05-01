@@ -42,9 +42,9 @@ defmodule PoliceElixirWeb.UserController do
   end
 
   def change_role(conn, params_req) do
-    %{"registration" => registration, "new_role" => new_role} = params_req
+    %{"id" => id, "new_role" => new_role} = params_req
 
-    case FetchRegistration.execute(registration) do
+    case GetById.execute(id) do
       {:ok, user} ->
         ChangeUserRole.execute(user, new_role)
         conn |> put_status(:ok) |> render(:user_updated, ok: user)

@@ -2,6 +2,7 @@ defmodule PoliceElixirWeb.UserController do
   use PoliceElixirWeb, :controller
   alias PoliceElixirWeb.Token
   alias PoliceElixir.Users
+  alias Users.User
   alias Users.CreateUser
   alias Users.FetchRegistration
   alias Users.Auth
@@ -53,8 +54,8 @@ defmodule PoliceElixirWeb.UserController do
   end
 
   defp generate_token(registration) do
-    with {:ok, %{id: user_id}} <- FetchRegistration.execute(registration) do
-      Token.sign(user_id)
+    with {:ok, %User{id: user_id, role: role}} <- FetchRegistration.execute(registration) do
+      Token.sign(user_id, role)
     end
   end
 end

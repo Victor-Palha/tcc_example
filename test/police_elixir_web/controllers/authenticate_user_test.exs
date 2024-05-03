@@ -12,7 +12,7 @@ defmodule PoliceElixirWeb.AuthenticateUserTest do
         "role" => "user"
       }
 
-      user_created = CreateUser.execute(params)
+      CreateUser.execute(params)
 
       #Now we can authenticate the user
       login_user = %{

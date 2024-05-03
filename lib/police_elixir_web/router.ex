@@ -5,11 +5,22 @@ defmodule PoliceElixirWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug PoliceElixirWeb.Plugs.Auth
+  end
+
+  #Routes without authentication
   scope "/api", PoliceElixirWeb do
     pipe_through :api
 
     post "/users", UserController, :create
     post "/users/auth", UserController, :auth
+  end
+
+  #Routes with authentication
+  scope "/api", PoliceElixirWeb do
+    pipe_through [:api, :auth]
+
     delete "/users/:id", UserController, :delete
     patch "/users/:id", UserController, :change_role
   end

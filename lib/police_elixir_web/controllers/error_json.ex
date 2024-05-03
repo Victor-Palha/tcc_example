@@ -8,6 +8,9 @@ defmodule PoliceElixirWeb.ErrorJSON do
 
   # By default, Phoenix returns the status message from
   # the template name. For example, "404.json" becomes
+  def render(:error, status: 401) do
+    %{errors: %{detail: "Unauthorized User"}}
+  end
   # "Not Found".
   def render(template, _assigns) do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}

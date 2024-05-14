@@ -16,21 +16,27 @@ defmodule PoliceElixir.Repo.Migrations.AddRegisterTable do
       add :register_was_realized, :boolean
       add :case_number, :string
       add :protocol_number, :string
-      add :preservation_local, :string
-      add :isolation_local, :string
+      add :preservation_local, :boolean
+      add :isolation_local, :boolean
       add :date_report, :date
       add :local_coordinates, :string
       add :local_history, :string
-      add :responsible_management, references(:users)
-      timestamps()
-    end
+      add :local_description, :string
+      add :characteristics, :string
+      add :sinal_of_break_in, :boolean
+      add :construction_features, :string
+      add :external_features, :string
+      add :street_features, :string
+      add :has_trace_elements, :boolean
 
-    create table(:experts_register) do
-      add :register_id, references(:registers)
-      add :main_expert, references(:users)
-      add :secondary_expert, references(:users)
+      add :responsible_management_id, references(:users, on_delete: :nothing)
+      add :main_expert_id, references(:users, on_delete: :nothing)
+      add :secondary_expert_id, references(:users, on_delete: :nothing)
       timestamps()
     end
+    create index(:registers, [:responsible_management_id])
+    create index(:registers, [:main_expert_id])
+    create index(:registers, [:secondary_expert_id])
 
     create table(:companies) do
       add :name, :string
@@ -40,6 +46,7 @@ defmodule PoliceElixir.Repo.Migrations.AddRegisterTable do
       add :register_id, references(:registers)
       timestamps()
     end
+    create index(:companies, [:register_id])
 
     create table(:victims) do
       add :indentification, :string
@@ -56,18 +63,7 @@ defmodule PoliceElixir.Repo.Migrations.AddRegisterTable do
       add :register_id, references(:registers)
       timestamps()
     end
-
-    create table(:location) do
-      add :description, :string
-      add :characteristics, :string
-      add :sinal_of_break_in, :boolean
-      add :construction_features, :string
-      add :external_features, :string
-      add :street_features, :string
-      add :has_trace_elements, :boolean
-      add :register_id, references(:location)
-      timestamps()
-    end
+    create index(:victims, [:register_id])
 
     create table(:trace_elements) do
       add :date_collection, :date
@@ -78,5 +74,6 @@ defmodule PoliceElixir.Repo.Migrations.AddRegisterTable do
       add :register_id, references(:registers)
       timestamps()
     end
+    create index(:trace_elements, [:register_id])
   end
 end

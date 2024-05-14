@@ -12,6 +12,7 @@ defmodule PoliceElixir.Users.User do
     field :password_hash, :string
     field :role, Ecto.Enum, values: [:admin, :user]
 
+    has_many :register, PoliceElixir.Registers.Register
     timestamps()
   end
 

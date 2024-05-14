@@ -17,7 +17,15 @@ defmodule PoliceElixir.Registers.Register do
     :preservation_local,
     :local_coordinates,
     :local_history,
-    :responsible_management
+    :responsible_management_id,
+    :main_expert_id,
+    :local_description,
+    :characteristics,
+    :sinal_of_break_in,
+    :construction_features,
+    :external_features,
+    :street_features,
+    :has_trace_elements,
   ]
 
   schema "registers" do
@@ -34,13 +42,23 @@ defmodule PoliceElixir.Registers.Register do
     field :register_was_realized, :boolean
     field :case_number, :string
     field :protocol_number, :string
-    field :isolation_local, Ecto.Enum, values: [:ISOLADO, :NAO_ISOLADO]
-    field :preservation_local, Ecto.Enum, values: [:PRESERVADO, :NAO_PRESERVADO]
+    field :isolation_local, :boolean
+    field :preservation_local, :boolean
     field :date_report, :date
     field :local_coordinates, :string
     field :local_history, :string
-    belongs_to :responsible_management, PoliceElixir.Users.User
+    field :responsible_management_id, :integer
+    field :main_expert_id, :integer
+    field :secondary_expert_id, :integer
+    field :local_description, :string
+    field :characteristics, :string
+    field :sinal_of_break_in, :boolean
+    field :construction_features, :string
+    field :external_features, :string
+    field :street_features, :string
+    field :has_trace_elements, :boolean
 
+    belongs_to :user, PoliceElixir.Users.User
     timestamps()
   end
 

@@ -15,6 +15,7 @@ defmodule PoliceElixirWeb.Router do
 
     post "/users", UserController, :create
     post "/users/auth", UserController, :auth
+    post "/registers", RegisterController, :create
   end
 
   #Routes with authentication

@@ -1,10 +1,10 @@
-defmodule PoliceElixirWeb.Units.CreateCompainiesTest do
+defmodule PoliceElixirWeb.Units.CreateTraceElementsTest do
   use PoliceElixirWeb.ConnCase
   alias PoliceElixir.Registers.{Register, CreateRegister}
   alias PoliceElixir.Users.{User, CreateUser}
-  alias PoliceElixir.Companies.{Compainie, CreateCompainie}
+  alias PoliceElixir.TraceElements.{TraceElement, CreateTraceElements}
 
-  describe "Unit - Create a Compainie" do
+  describe "Unit - Create a Trace Element" do
     setup do
       params = %{
         "name" => "João Victor Ferreira Palha",
@@ -51,20 +51,21 @@ defmodule PoliceElixirWeb.Units.CreateCompainiesTest do
       {:ok, register_id: id}
     end
 
-    test "should be able to create a new compainie", %{register_id: id}  do
-      expected_response = "Compainie 1"
+    test "should be able to create a new trace element", %{register_id: id}  do
+      expected_response = "Superfície 1"
 
       params = %{
-        "name" => "Compainie 1",
-        "identification" => "123456",
-        "function" => "Function 1",
-        "registration" => "123456",
+        "date_collection" => DateTime.utc_now(),
+        "surface_of_collection" => "Superfície 1",
+        "quantity" => 1,
+        "requested_exam" => "Exame 1",
+        "state_of_trace" => "Estado 1",
         "register_id" => id
       }
 
-      {:ok, %Compainie{name: name}} = CreateCompainie.execute(params)
+      {:ok, %TraceElement{surface_of_collection: soc}} = CreateTraceElements.execute(params)
 
-      assert name == expected_response
+      assert soc == expected_response
     end
   end
 

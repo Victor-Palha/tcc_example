@@ -66,7 +66,7 @@ defmodule PoliceElixir.Repo.Migrations.AddRegisterTable do
     create index(:victims, [:register_id])
 
     create table(:trace_elements) do
-      add :date_collection, :date
+      add :date_collection, :utc_datetime
       add :surface_of_collection, :string
       add :quantity, :integer
       add :requested_exam, :string

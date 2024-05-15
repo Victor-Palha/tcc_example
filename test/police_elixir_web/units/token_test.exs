@@ -3,14 +3,14 @@ defmodule PoliceElixirWeb.Units.TokenTest do
   alias PoliceElixirWeb.Token
 
   describe "Test Token generation" do
-    test "Generate Token" do
+    test "should be able to generate a acess Token" do
       random_user_id = 10
       user_role = "user"
       token = Token.sign(random_user_id, user_role)
       assert token != nil
     end
 
-    test "Verify Token" do
+    test "Should be able to verify a token" do
       random_user_id = 10
       user_role = "admin"
       token = Token.sign(random_user_id, user_role)
@@ -18,7 +18,7 @@ defmodule PoliceElixirWeb.Units.TokenTest do
       assert data.sub == %{user_id: random_user_id, role: user_role}
     end
 
-    test "Verify Role" do
+    test "should be able to validate a token from a admin user" do
       random_user_id = 10
       user_role = "admin"
       token = Token.sign(random_user_id, user_role)

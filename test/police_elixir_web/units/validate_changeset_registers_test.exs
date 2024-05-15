@@ -3,7 +3,7 @@ defmodule PoliceElixirWeb.Units.ValidChangesetRegistersTest do
   alias PoliceElixir.Registers.Register
 
   describe "Unit - valid changeset registers" do
-    test "Changeset Register" do
+    test "Should be able to validate the register changeset" do
       params = %{
         "type_register" => "LCC",
         "number_document" => "123456",

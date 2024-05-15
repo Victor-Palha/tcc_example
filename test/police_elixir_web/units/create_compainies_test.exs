@@ -1,11 +1,11 @@
-defmodule PoliceElixirWeb.Units.CreateARegisterTest do
+defmodule PoliceElixirWeb.Units.CreateCompainiesTest do
   use PoliceElixirWeb.ConnCase
-  alias PoliceElixir.Registers.{CreateRegister, Register}
-  alias PoliceElixir.Users.{CreateUser, User}
+  alias PoliceElixir.Registers.{Register, CreateRegister}
+  alias PoliceElixir.Users.{User, CreateUser}
+  alias PoliceElixir.Companies.{Compainie, CreateCompainie}
 
-  describe "Unit - Create Register" do
+  describe "Unit - Create a Compainie" do
     setup do
-      #To delete a user, we need to create a user first
       params = %{
         "name" => "João Victor Ferreira Palha",
         "registration" => "5965778/1",
@@ -15,10 +15,6 @@ defmodule PoliceElixirWeb.Units.CreateARegisterTest do
 
       {:ok, %User{id: id}} = CreateUser.execute(params)
 
-      {:ok, user_id: id}
-    end
-
-    test "should be able to create a new register", %{user_id: id} do
       params = %{
         "type_register" => "LCC",
         "number_document" => "123456",
@@ -50,8 +46,26 @@ defmodule PoliceElixirWeb.Units.CreateARegisterTest do
         "secondary_expert_id" => nil
       }
 
-      {:ok, %Register{type_register: type_register}} = CreateRegister.execute(params)
-      assert type_register == :LCC
+      {:ok, %Register{id: id}} = CreateRegister.execute(params)
+
+      {:ok, register_id: id}
+    end
+
+    test "should be able to create a new compainie", %{register_id: id}  do
+      expected_response = "Compainie 1"
+
+      params = %{
+        "name" => "Compainie 1",
+        "identification" => "123456",
+        "function" => "Function 1",
+        "registration" => "123456",
+        "register_id" => id
+      }
+
+      {:ok, %Compainie{name: name} = compaine} = CreateCompainie.execute(params)
+
+      assert name == expected_response
     end
   end
+
 end

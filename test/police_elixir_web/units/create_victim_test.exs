@@ -52,7 +52,7 @@ defmodule PoliceElixirWeb.Units.CreateVictim do
       {:ok, register_id: id}
     end
 
-    test "Create a new Victim", %{register_id: id} do
+    test "should be able to create a new victim", %{register_id: id} do
 
       expected_response = "Victim 1"
 

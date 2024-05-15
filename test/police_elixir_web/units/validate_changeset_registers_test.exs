@@ -37,7 +37,6 @@ defmodule PoliceElixirWeb.Units.ValidChangesetRegistersTest do
 
       register = Register.changeset(params)
       assert register.valid? == true
-      IO.inspect(register)
     end
   end
 end

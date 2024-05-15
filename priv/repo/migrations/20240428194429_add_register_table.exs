@@ -49,7 +49,7 @@ defmodule PoliceElixir.Repo.Migrations.AddRegisterTable do
     create index(:companies, [:register_id])
 
     create table(:victims) do
-      add :indentification, :string
+      add :identification, :string
       add :found_position, :string
       add :cadaveric_rigidity, :string
       add :sex_victim, :string

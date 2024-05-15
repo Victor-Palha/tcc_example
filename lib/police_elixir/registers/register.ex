@@ -2,6 +2,37 @@ defmodule PoliceElixir.Registers.Register do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @register_fields [
+    :type_register,
+    :number_document,
+    :requester_register,
+    :requesting_unit,
+    :street,
+    :neighborhood,
+    :district,
+    :date_activation,
+    :crime_motivation,
+    :crime_method,
+    :register_was_realized,
+    :case_number,
+    :protocol_number,
+    :isolation_local,
+    :preservation_local,
+    :date_report,
+    :local_coordinates,
+    :local_history,
+    :responsible_management_id,
+    :main_expert_id,
+    :secondary_expert_id,
+    :local_description,
+    :characteristics,
+    :sinal_of_break_in,
+    :construction_features,
+    :external_features,
+    :street_features,
+    :has_trace_elements,
+  ]
+
   @required_fields_creation [
     :type_register,
     :requester_register,
@@ -59,12 +90,13 @@ defmodule PoliceElixir.Registers.Register do
     field :has_trace_elements, :boolean
 
     belongs_to :user, PoliceElixir.Users.User
+    has_many :victims, PoliceElixir.Victims.Victim
     timestamps()
   end
 
   def changeset(register \\ %__MODULE__{}, params) do
     register
-    |> cast(params, @required_fields_creation)
+    |> cast(params, @register_fields)
     |> validate_required(@required_fields_creation)
   end
 end
